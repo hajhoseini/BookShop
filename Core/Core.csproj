@@ -11,7 +11,11 @@
     <Folder Include="Commands\" />
     <Folder Include="IRepositories\" />
     <Folder Include="IReaders\" />
-    <Folder Include="Queries\" />
+    <Folder Include="Queries\" />    
   </ItemGroup>
+	
+  <ItemGroup>
+	<PackageReference Include="MediatR" Version="12.1.1" />
+  </ItemGroup>	
 
 </Project>
