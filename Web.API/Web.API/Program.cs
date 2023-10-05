@@ -1,3 +1,6 @@
+using Infrastructure.Data.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace Web.API
 {
 	public class Program
@@ -5,6 +8,9 @@ namespace Web.API
 		public static void Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
+
+			builder.Services.AddDbContext<BookShopDBContext>(options =>
+						options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 			// Add services to the container.
 			builder.Services.AddAuthorization();
