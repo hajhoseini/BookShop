@@ -2,10 +2,17 @@
 using Core.IReaders;
 using Core.Queries.UserQueries;
 using Infrastructure.Data.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Readers;
 
+public class UserReader : GenericReader<User, GetUserQuery, GetListUsersQuery>, IUserReader
+{
+	public UserReader(BookShopDBContext context) : base(context)
+	{
+	}
+}
+
+/*
 public class UserReader : IUserReader
 {
 	private readonly BookShopDBContext _context;
@@ -25,3 +32,5 @@ public class UserReader : IUserReader
 		return await _context.Users.ToListAsync();
 	}
 }
+*/
+
