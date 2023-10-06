@@ -9,8 +9,6 @@
   <ItemGroup>
     <Folder Include="Entities\" />
     <Folder Include="Commands\" />
-    <Folder Include="IRepositories\" />
-    <Folder Include="IReaders\" />
     <Folder Include="Queries\" />    
   </ItemGroup>
 	
