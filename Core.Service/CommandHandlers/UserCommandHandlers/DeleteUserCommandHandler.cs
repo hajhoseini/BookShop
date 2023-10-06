@@ -6,16 +6,16 @@ namespace Core.Service.CommandHandlers
 {
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, bool>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteUserCommandHandler(IUserRepository userRepository)
+        public DeleteUserCommandHandler(IUnitOfWork unitOfWork)
         {
-            this._userRepository = userRepository;
+            this._unitOfWork = unitOfWork;
         }
 
         public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            return await _userRepository.Delete(request);
+            return await _unitOfWork.Users.Delete(request);
         }
     }
 }
