@@ -5,7 +5,7 @@ using Infrastructure.Data.Data;
 namespace Infrastructure.Data.Repositories;
 
 public class GenericRepository<TEntity, TCreateCommand, TUpdateCommand, TDeleteCommand> : 
-			IGenericReader<TEntity, TCreateCommand, TUpdateCommand, TDeleteCommand> 
+			IGenericRepository<TEntity, TCreateCommand, TUpdateCommand, TDeleteCommand> 
 							where TEntity : class
 {
 	private readonly BookShopDBContext _context;
