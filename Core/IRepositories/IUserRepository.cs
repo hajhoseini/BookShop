@@ -4,7 +4,7 @@ using Core.Entities;
 namespace Core.IRepositories;
 
 public interface IUserRepository :
-	IGenericReader<User, CreateUserCommand, UpdateUserCommand, DeleteUserCommand>
+	IGenericRepository<User, CreateUserCommand, UpdateUserCommand, DeleteUserCommand>
 {
 
 }
