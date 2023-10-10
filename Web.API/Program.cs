@@ -2,8 +2,8 @@ using Core.IReaders;
 using Core.IRepositories;
 using Core.Service.CommandHandlers;
 using Infrastructure.Data.Data;
+using Infrastructure.Data.IRepositories;
 using Infrastructure.Data.Readers;
-using Infrastructure.Data.Repositories;
 using Infrastructure.MapperProfiles;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -28,9 +28,8 @@ namespace Web.API
 			// Add services to the container.
 			//builder.Services.AddAuthorization();
 
-			//builder.Services.AddScoped<IUserReader, UserReader>();
-			//builder.Services.AddScoped<IUserRepository, UserRepository>();
-			builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+			builder.Services.AddScoped<IUserReader, UserReader>();
+			builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 			var app = builder.Build();
 

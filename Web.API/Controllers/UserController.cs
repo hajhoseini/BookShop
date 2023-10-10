@@ -23,9 +23,10 @@ public class UserController : ControllerBase
 		return Ok(new { Data = result });
 	}
 
-	[HttpGet]
-	public async Task<IActionResult> GetUserById([FromBody] GetUserQuery query)
+	[HttpGet("{guid}")]
+	public async Task<IActionResult> GetUserById(Guid guid)
 	{
+		GetUserQuery query = new GetUserQuery() { Guid = guid };
 		var result = await mediator.Send(query);
 		return Ok(new { Data = result });
 	}

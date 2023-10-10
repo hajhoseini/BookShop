@@ -4,18 +4,18 @@ using MediatR;
 
 namespace Core.Service.CommandHandlers
 {
-    public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, bool>
-    {
-        private readonly IUnitOfWork _unitOfWork;
+	public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, bool>
+	{
+		private readonly IUserRepository UserRepository;
 
-        public DeleteUserCommandHandler(IUnitOfWork unitOfWork)
-        {
-            this._unitOfWork = unitOfWork;
-        }
+		public DeleteUserCommandHandler(IUserRepository UserRepository)
+		{
+			this.UserRepository = UserRepository;
+		}
 
-        public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
-        {
-            return await _unitOfWork.Users.Delete(request);
-        }
-    }
+		public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+		{
+			return await UserRepository.Delete(request);
+		}
+	}
 }

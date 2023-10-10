@@ -6,15 +6,15 @@ namespace Core.Service.CommandHandlers;
 
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, bool>
 {
-    private readonly IUnitOfWork _unitOfWork;
+	private readonly IUserRepository UserRepository;
 
-	public CreateUserCommandHandler(IUnitOfWork unitOfWork)
-    {
-        this._unitOfWork = unitOfWork;
-    }
+	public CreateUserCommandHandler(IUserRepository UserRepository)
+	{
+		this.UserRepository = UserRepository;
+	}
 
-    public async Task<bool> Handle(CreateUserCommand request, CancellationToken cancellationToken)
-    {
-        return await _unitOfWork.Users.Create(request);
-    }
+	public async Task<bool> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+	{
+		return await UserRepository.Create(request);
+	}
 }

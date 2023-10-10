@@ -8,7 +8,7 @@ namespace Infrastructure.Data.Data.Configs
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasKey(c => c.Id);
+            builder.HasKey(c => c.Guid);
         }
     }
 }
