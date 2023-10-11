@@ -21,7 +21,7 @@ public class GenericRepository<TEntity, TCreateCommand, TUpdateCommand, TDeleteC
 	{
 		var entity = _mapper.Map<TEntity>(request);
 		await _context.Set<TEntity>().AddAsync(entity);
-		_context.SaveChanges();
+		//_context.SaveChanges();
 
 		return true;
 	}
@@ -36,7 +36,7 @@ public class GenericRepository<TEntity, TCreateCommand, TUpdateCommand, TDeleteC
 		}
 
 		_context.Set<TEntity>().Remove(entity);
-		_context.SaveChanges();
+		//_context.SaveChanges();
 
 		return true;
 	}
@@ -52,7 +52,7 @@ public class GenericRepository<TEntity, TCreateCommand, TUpdateCommand, TDeleteC
 
 		entity = _mapper.Map(request, entity);
 		_context.Set<TEntity>().Update(entity);
-		_context.SaveChanges();
+		//_context.SaveChanges();
 
 		return true;
 	}

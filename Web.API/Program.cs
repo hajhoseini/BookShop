@@ -29,7 +29,8 @@ namespace Web.API
 			//builder.Services.AddAuthorization();
 
 			builder.Services.AddScoped<IUserReader, UserReader>();
-			builder.Services.AddScoped<IUserRepository, UserRepository>();
+			//builder.Services.AddScoped<IUserRepository, UserRepository>();
+			builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 			var app = builder.Build();
 
