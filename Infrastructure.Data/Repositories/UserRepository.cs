@@ -1,58 +1,14 @@
 ﻿using AutoMapper;
 using Core.Commands.UserCommands;
-using Core.Entities;
 using Core.IRepositories;
+using Core.Entities;
 using Infrastructure.Data.Data;
-using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Data.IRepositories
+namespace Infrastructure.Data.Repositories;
+
+public class UserRepository : GenericRepository<User, CreateUserCommand, UpdateUserCommand, DeleteUserCommand>, IUserRepository
 {
-	public class UserRepository : IUserRepository
+	public UserRepository(BookShopDBContext context, IMapper mapper) : base(context, mapper)
 	{
-		private readonly BookShopDBContext context;
-		private readonly IMapper mapper;
-
-		public UserRepository(BookShopDBContext context, IMapper mapper)
-		{
-			this.context = context;
-			this.mapper = mapper;
-		}
-
-		public async Task<bool> Create(CreateUserCommand request)
-		{
-			var User = mapper.Map<User>(request);
-
-			await context.Users.AddAsync(User);
-			await context.SaveChangesAsync();
-
-			return true;
-		}
-
-		public async Task<bool> Delete(DeleteUserCommand request)
-		{
-			var User = await context.Users.FirstOrDefaultAsync(c => c.Guid == request.Guid);
-			if (User == null)
-			{
-				return false;
-			}
-
-			context.Users.Remove(User);
-			await context.SaveChangesAsync();
-			return true;
-		}
-
-		public async Task<bool> Update(UpdateUserCommand request)
-		{
-			var User = await context.Users.FirstOrDefaultAsync(c => c.Guid == request.Guid);
-			if (User == null)
-			{
-				return false;
-			}
-
-			mapper.Map(request, User);
-			await context.SaveChangesAsync();
-
-			return true;
-		}
 	}
 }
