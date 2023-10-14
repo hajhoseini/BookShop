@@ -1,4 +1,5 @@
 ﻿using Core.Commands.UserCommands;
+using Core.Entities;
 using Core.IRepositories;
 using MediatR;
 
@@ -15,12 +16,16 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, bool>
 
     public async Task<bool> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        var result = await _unitOfWork.Users.Update(request);
-        if(result)
+        var result = await _unitOfWork.genericReposity<User, CreateUserCommand, UpdateUserCommand, DeleteUserCommand>().Update(request);
+        if (result)
         {
-			_unitOfWork.Complete();
-		}        
+            _unitOfWork.Complete();
+        }
+		else
+		{
+			_unitOfWork.Dispose();
+		}
 
-        return true;
+		return true;
     }
 }

@@ -1,6 +1,9 @@
-﻿namespace Core.IRepositories;
+﻿using Core.Common;
 
-public interface IGenericRepository<TEntity, TCreateCommand, TUpdateCommand, TDeleteCommand> where TEntity : class
+namespace Core.IRepositories;
+
+public interface IGenericRepository<TEntity, TCreateCommand, TUpdateCommand, TDeleteCommand> 
+				where TEntity : BaseEntity
 {
 	Task<bool> Create(TCreateCommand request);
 	Task<bool> Update(TUpdateCommand request);
