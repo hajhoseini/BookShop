@@ -1,6 +1,4 @@
-﻿using Core.IReaders;
-
-namespace Core.IRepositories;
+﻿namespace Core.IRepositories;
 
 public interface IUnitOfWork : IDisposable
 {

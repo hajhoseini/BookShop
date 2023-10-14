@@ -15,7 +15,13 @@ namespace Core.Service.CommandHandlers
 
         public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            return await _unitOfWork.Users.Delete(request);
-        }
+			var result = await _unitOfWork.Users.Delete(request);
+			if (result)
+			{
+				_unitOfWork.Complete();
+			}
+
+			return true;
+		}
     }
 }

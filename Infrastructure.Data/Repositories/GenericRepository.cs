@@ -21,30 +21,30 @@ public class GenericRepository<TEntity, TCreateCommand, TUpdateCommand, TDeleteC
 	{
 		var entity = _mapper.Map<TEntity>(request);
 		await _context.Set<TEntity>().AddAsync(entity);
-		//await _context.SaveChangesAsync();
+		//_context.SaveChanges();
 
 		return true;
 	}
 
 	public async Task<bool> Delete(TDeleteCommand request)
 	{
-		var id = request.GetType().GetProperty("Id").GetValue(request);
-		var entity = await _context.Set<TEntity>().FindAsync(id);
+		var guid = request.GetType().GetProperty("Guid").GetValue(request);
+		var entity = await _context.Set<TEntity>().FindAsync(guid);
 		if (entity == null)
 		{
 			return false;
 		}
 
 		_context.Set<TEntity>().Remove(entity);
-		//await _context.SaveChangesAsync();
+		//_context.SaveChanges();
 
 		return true;
 	}
 
 	public async Task<bool> Update(TUpdateCommand request)
 	{
-		var id = request.GetType().GetProperty("Id").GetValue(request);
-		var entity = await _context.Set<TEntity>().FindAsync(id);
+		var guid = request.GetType().GetProperty("Guid").GetValue(request);
+		var entity = await _context.Set<TEntity>().FindAsync(guid);
 		if (entity == null)
 		{
 			return false;
@@ -52,7 +52,7 @@ public class GenericRepository<TEntity, TCreateCommand, TUpdateCommand, TDeleteC
 
 		entity = _mapper.Map(request, entity);
 		_context.Set<TEntity>().Update(entity);
-		//await _context.SaveChangesAsync();
+		//_context.SaveChanges();
 
 		return true;
 	}

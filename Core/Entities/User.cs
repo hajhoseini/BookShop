@@ -1,8 +1,9 @@
-﻿namespace Core.Entities;
+﻿using Core.Common;
 
-public class User
+namespace Core.Entities;
+
+public class User : BaseEntity
 {
-	public int Id { get; set; }
 	public string Name { get; set; }
 	public string LastName { get; set; }
 	public string NationalCode { get; set; }

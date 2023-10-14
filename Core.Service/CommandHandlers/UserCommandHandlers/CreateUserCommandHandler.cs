@@ -15,6 +15,16 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, bool>
 
     public async Task<bool> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        return await _unitOfWork.Users.Create(request);
-    }
+		var result = await _unitOfWork.Users.Create(request);
+		if (result)
+		{
+			_unitOfWork.Complete();
+		}
+		else
+		{
+			_unitOfWork.Dispose();
+		}
+
+		return true;
+	}
 }
