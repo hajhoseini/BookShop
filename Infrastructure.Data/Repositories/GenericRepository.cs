@@ -1,20 +1,24 @@
 ﻿using AutoMapper;
+using Core.Common;
 using Core.IRepositories;
 using Infrastructure.Data.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Repositories;
 
 public class GenericRepository<TEntity, TCreateCommand, TUpdateCommand, TDeleteCommand> : 
 			IGenericRepository<TEntity, TCreateCommand, TUpdateCommand, TDeleteCommand> 
-							where TEntity : class
+							where TEntity : BaseEntity
 {
 	private readonly BookShopDBContext _context;
 	private readonly IMapper _mapper;
+	private readonly DbSet<TEntity> _dbEntitySet;
 
 	public GenericRepository(BookShopDBContext context, IMapper mapper)
     {
 		_context = context;
 		_mapper = mapper;
+		_dbEntitySet = _context.Set<TEntity>();
 	}
 
     public async Task<bool> Create(TCreateCommand request)

@@ -1,29 +1,66 @@
 ﻿using AutoMapper;
+using Core.Commands.UserCommands;
+using Core.Common;
+using Core.Entities;
 using Core.IRepositories;
 using Infrastructure.Data.Data;
+using Infrastructure.Data.Repositories;
+using System.Collections;
 
-namespace Infrastructure.Data.Repositories
+public class UnitOfWork : IUnitOfWork
 {
-	public class UnitOfWork : IUnitOfWork
+	private readonly BookShopDBContext _context;
+	private readonly IMapper _mapper;
+
+	public UnitOfWork(BookShopDBContext context, IMapper mapper)
 	{
-		private readonly BookShopDBContext _context;
+		_context = context;
+		_mapper = mapper; 
 
-		public UnitOfWork(BookShopDBContext context, IMapper mapper)
+		//Users = new UserRepository(_context, mapper); 
+	}
+
+	//public IUserRepository Users { get; private set; } 
+
+	public int Complete()
+	{
+		return _context.SaveChanges();
+	}
+
+	public void Dispose()
+	{
+		_context.Dispose();
+	}
+
+	private Hashtable _repositories;
+	private static readonly Dictionary<Type, Type> dic = new Dictionary<Type, Type>
+	{
+		{ 
+			typeof(GenericRepository<User, CreateUserCommand, UpdateUserCommand, DeleteUserCommand>), typeof(UserRepository) 
+		}
+	};
+
+	public IGenericRepository<TEntity, TCreateCommand, TUpdateCommand, TDeleteCommand> genericReposity<TEntity, TCreateCommand, TUpdateCommand, TDeleteCommand>() where TEntity : BaseEntity
+	{
+		if (_repositories == null)
 		{
-			_context = context;
-			Users = new UserRepository(_context, mapper);
+			_repositories = new Hashtable();
 		}
 
-		public IUserRepository Users { get; private set; }
-		
-		public int Complete()
+		var type = typeof(TEntity).Name;
+		if (_repositories.ContainsKey(type))
 		{
-			return _context.SaveChanges();
+			return (IGenericRepository<TEntity, TCreateCommand, TUpdateCommand, TDeleteCommand>)_repositories[type];
 		}
 
-		public void Dispose()
+		var closedRepositoryType = typeof(GenericRepository<,,,>).MakeGenericType(typeof(TEntity), typeof(TCreateCommand), typeof(TUpdateCommand), typeof(TDeleteCommand));
+		if (dic.ContainsKey(closedRepositoryType))
 		{
-			_context.Dispose();
+			closedRepositoryType = dic[closedRepositoryType];
 		}
+
+		_repositories.Add(type, Activator.CreateInstance(closedRepositoryType, _context, _mapper));
+
+		return (IGenericRepository<TEntity, TCreateCommand, TUpdateCommand, TDeleteCommand>)_repositories[type];
 	}
 }
