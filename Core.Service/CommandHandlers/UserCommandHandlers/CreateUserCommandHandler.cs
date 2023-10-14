@@ -20,6 +20,10 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, bool>
 		{
 			_unitOfWork.Complete();
 		}
+		else
+		{
+			_unitOfWork.Dispose();
+		}
 
 		return true;
 	}
